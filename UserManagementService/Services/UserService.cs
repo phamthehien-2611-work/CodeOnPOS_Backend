@@ -38,6 +38,8 @@ namespace UserManagementService.Services
                 UserId = Guid.NewGuid(),
                 UserName = request.UserName,
                 PasswordHash = hashedPassword, // Chỉ lưu mật khẩu đã mã hóa
+                SecurityKey = "",
+                License = "",
                 FullName = request.UserName,
                 PhoneNumber = request.PhoneNumber,
                 Email = request.Email,

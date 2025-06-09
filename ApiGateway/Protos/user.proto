@@ -1,0 +1,33 @@
+syntax = "proto3";
+import "google/protobuf/any.proto";
+
+option csharp_namespace = "UserManagementService.Protos";
+
+service UserAuthService {
+  rpc Register (RegisterRequest) returns (ApiResponse);
+  rpc Login (LoginRequest) returns (ApiResponse);
+}
+
+message RegisterRequest {
+  string UserName = 1;
+  string Password = 2;
+  string FullName = 3;
+  string PhoneNumber = 5;
+  string Email = 6;
+  string Address = 7;
+}
+
+message LoginRequest {
+  string UserName = 1;
+  string Password = 2;
+}
+
+message LoginSuccessPayload {
+  string Token = 1;
+}
+
+message ApiResponse {
+  int32 StatusCode = 1;
+  string MessageText = 2;
+  google.protobuf.Any Data = 3;
+}
