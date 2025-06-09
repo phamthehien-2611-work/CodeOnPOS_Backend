@@ -12,8 +12,7 @@
         }
       ],
       "DownstreamPathTemplate": "/User.UserService/Register",
-      "DownstreamVersion": "2",
-      "DownstreamVersionPolicy": "Request",
+      "DownstreamHttpVersion": "2"
     },
     // Route cho chức năng Login
     {
@@ -27,8 +26,7 @@
         }
       ],
       "DownstreamPathTemplate": "/User.UserService/Login",
-      "DownstreamVersion": "2",
-      "DownstreamVersionPolicy": "Request",
+      "DownstreamHttpVersion": "2"
     }
   ],
   "GlobalConfiguration": {
