@@ -1,11 +1,9 @@
 ﻿using System.Net;
 using Grpc.Core;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using Google.Protobuf.WellKnownTypes;
 using UserManagementService.Protos;
 using UserManagementService.Infrastructure.Persistence;
@@ -37,15 +35,16 @@ namespace UserManagementService.Services
 
             tbl_User user = new tbl_User
             {
+                UserId = Guid.NewGuid(),
                 UserName = request.UserName,
-                PasswordHash = hashedPassword, // Chỉ lưu mật khẩu đã băm
+                PasswordHash = hashedPassword, // Chỉ lưu mật khẩu đã mã hóa
                 FullName = request.UserName,
                 PhoneNumber = request.PhoneNumber,
                 Email = request.Email,
                 Address = request.Address,
+                CreatedTime = DateTime.UtcNow,
             };
 
-            // TODO: Lưu user mới vào cơ sở dữ liệu
             _context.tbl_Users.Add(user);
             await _context.SaveChangesAsync();
 
@@ -75,7 +74,6 @@ namespace UserManagementService.Services
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            // Thêm các thông tin (claims) vào token
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
@@ -88,7 +86,7 @@ namespace UserManagementService.Services
                 issuer: jwtSettings["Issuer"],
                 audience: jwtSettings["Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddHours(3), // Thời gian hết hạn của token
+                expires: DateTime.UtcNow.AddHours(3),
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
