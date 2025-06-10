@@ -1,0 +1,35 @@
+{
+  "Routes": [
+    // Route cho chức năng Register
+    {
+      "UpstreamPathTemplate": "/api/users/register",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "DownstreamPathTemplate": "/User.UserService/Register",
+      "DownstreamHttpVersion": "2"
+    },
+    // Route cho chức năng Login
+    {
+      "UpstreamPathTemplate": "/api/users/login",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "DownstreamPathTemplate": "/User.UserService/Login",
+      "DownstreamHttpVersion": "2"
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:5000" // Cổng mặc định của ApiGateway, bạn có thể thay đổi
+  }
+}
