@@ -1,0 +1,51 @@
+syntax = "proto3";
+import "google/protobuf/any.proto";
+
+option csharp_namespace = "ProductManagementService.Protos";
+
+service ProductConfigService {
+	rpc Search (ProductRequest) returns (ApiResponse);
+	rpc Add (ProductRequest) returns (ApiResponse);
+	rpc Edit (ProductRequest) returns (ApiResponse);
+	rpc Delete (DeleteProductRequest) returns (ApiResponse);
+}
+
+message ProductRequest {
+	string ProductID = 1;
+	string ProductCode = 2;
+	string ProductName = 3;
+	string Barcode = 4;
+	string UnitID = 5;
+	string ProductCategoryID = 6;
+	string BrandID = 7;
+	string Description = 8;
+	bool StopUsing = 9;
+	string PropertyID = 10;
+	repeated UnitConvertRequest ProductUnitConvert = 11;
+	repeated ProductAttributeRequest ProductUnitConvert = 12;
+}
+
+message UnitConvertRequest {
+	string ProductUnitConvertID = 1;
+	string ProductID = 2;
+	string UnitID = 3;
+	double ConvertRate = 4;
+	bool DivisionBase = 5;
+}
+
+message ProductAttributeRequest {
+	string ProductAttributeID = 1;
+	string ProductID = 2;
+	string AttributeName = 3;
+	string AttributeValue = 4;
+}
+
+message DeleteProductRequest {
+	repeated string ListProductID = 1;
+}
+
+message ApiResponse {
+  int32 StatusCode = 1;
+  string MessageText = 2;
+  google.protobuf.Any Data = 3;
+}

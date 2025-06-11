@@ -1,9 +1,14 @@
+using Microsoft.EntityFrameworkCore;
 using ProductManagementService.Services;
+using ProductManagementService.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
+
+builder.Services.AddDbContext<ProductDbContext>(
+        options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
